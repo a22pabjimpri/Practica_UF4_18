@@ -13,5 +13,19 @@ public class Personal extends Persona {
 
     private int anyInici;
 
+    public Personal(int anyInici, String nom, String dni, String emailPersonal) {
+        super(nom, dni, emailPersonal);
+        this.anyInici = anyInici;
+    }
+
+    public int getAnyInici() {
+        return anyInici;
+    }
+
+    public void setAnyInici(int anyInici) {
+        this.anyInici = anyInici;
+    }
+
+    
 
 }
