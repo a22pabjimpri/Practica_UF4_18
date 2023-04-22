@@ -301,8 +301,6 @@ public class Practica18_UF4_Pablo {
                 String correuTutor[] = ((AlumneMenor) alumne).correuTutor;
                 correu = correuTutor[0];
                 cc = correuTutor[1];
-                System.out.println("Concepte del mail: ");
-                subject = scan.nextLine();
 
                 System.out.println("Missatge del mail: ");
                 missatge = scan.nextLine();
@@ -312,17 +310,13 @@ public class Practica18_UF4_Pablo {
                 if (!autoritzacio) {
                     correu = alumne.getEmailPersonal();
                     cc = alumne.getEmailCentre();
-                    System.out.println("Concepte del mail: ");
-                    subject = scan.nextLine();
 
                     System.out.println("Missatge del mail: ");
                     missatge = scan.nextLine();
                 } else {
                     correu = alumne.getEmailPersonal();
                     System.out.println("Introdueix el mail d'un tutor: ");
-                    cc = scan.next();
-                    System.out.println("Concepte del mail: ");
-                    subject = scan.nextLine();
+                    cc = scan.next();                  
                     System.out.println("Missatge del mail: ");
                     missatge = scan.nextLine();
                 }
@@ -332,11 +326,23 @@ public class Practica18_UF4_Pablo {
     }
 
     private static void mostrarEstadistiques() {
-
+        int numPersones = 0;
+        
+        for (int i = 0; i < docents.size(); i++) {
+            numPersones++;
+        }
+        for (int i = 0; i < personal.size(); i++) {
+            numPersones++;
+        }
+        for (int i = 0; i < estudiants.size(); i++) {
+            numPersones++;
+        }
+        
+        System.out.println("Hi han " + numPersones + " persones al centre");
     }
 
     private static void imprimirEtiquetesNadal() {
-
+        
     }
 
 }
