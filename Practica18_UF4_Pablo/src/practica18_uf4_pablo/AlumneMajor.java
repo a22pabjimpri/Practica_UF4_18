@@ -9,5 +9,5 @@ package practica18_uf4_pablo;
  * @author Pablo Jiménez
  */
 public class AlumneMajor extends Estudiant {
-    
+    private boolean autoritzacioTutors;
 }

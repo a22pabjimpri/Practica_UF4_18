@@ -9,5 +9,9 @@ package practica18_uf4_pablo;
  * @author Pablo Jiménez
  */
 public class Personal extends Persona {
-    
+
+
+    private int anyInici;
+
+
 }

@@ -9,5 +9,8 @@ package practica18_uf4_pablo;
  * @author Pablo Jiménez
  */
 public class Docent extends Persona {
-    
+    private String especialitat;
+    private String titulacio;
+    private int anyInici;
+    private String emailCentre;
 }
