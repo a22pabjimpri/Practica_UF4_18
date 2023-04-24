@@ -14,7 +14,7 @@ public class UtilsExamenUF3 {
     public static void EnviarEmail(String to, String cc, String subject, String message)
     {
         System.out.println("Enviant correu a " + to);
-        if (cc.equals("")) System.out.println(" amb còpia a: " + cc);
+        if (!cc.equals("")) System.out.println(" amb còpia a: " + cc);
 
         System.out.println(" - Assumpte: " + subject);
         System.out.println(" - Cos del missatge: " + message);

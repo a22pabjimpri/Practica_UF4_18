@@ -125,10 +125,10 @@ public class Practica18_UF4_Pablo {
         int anyInici, dia, mes, any, anyActual, edat;
         LocalDate dataNaix;
 
-        System.out.print("Nom d'aquest empleat: ");
-        nom = scan.nextLine();
+        System.out.print("Nom d'aquest alumne: ");
+        nom = scan.next();
 
-        System.out.print("Dni de l'empleat: ");
+        System.out.print("Dni de l'alumne: ");
         dni = scan.next();
 
         System.out.print("E-mail personal: ");
@@ -150,10 +150,9 @@ public class Practica18_UF4_Pablo {
         LocalDate dataActual = LocalDate.now();
         anyActual = dataActual.getYear();
         edat = anyActual - any;
-        if (edat < 18) {
-            AlumneMenor alumne = null;
-            String[] mailTutor = alumne.correuTutor;
-            String[] adrecaTutor = alumne.adrecapostalTutor;
+        if (edat < 18) {         
+            String[] mailTutor = new String[2];
+            String[] adrecaTutor = new String[2];
 
             for (int i = 0; i < mailTutor.length; i++) {
                 System.out.print("Correu del tutor " + i + ": ");
@@ -163,7 +162,7 @@ public class Practica18_UF4_Pablo {
                 System.out.print("Adreça del tutor " + i + ": ");
                 adrecaTutor[i] = scan.next();
             }
-            alumne = new AlumneMenor(dataNaix, anyInici, cicle, emailCentre, nom, dni, emailPersonal, mailTutor, adrecaTutor);
+            AlumneMenor alumne = new AlumneMenor(dataNaix, anyInici, cicle, emailCentre, nom, dni, emailPersonal, mailTutor, adrecaTutor);
             estudiants.add(alumne);
         } else {
             AlumneMajor alumne = null;
@@ -186,9 +185,9 @@ public class Practica18_UF4_Pablo {
         String missatge = "";
 
         System.out.println("Per a qui vols enviar un mail?");
-        int opcio = Utils.LlegirInt("1.Personal \n2.Docent \n3.Estudiant");
+        int opcio = Utils.LlegirInt("1.Personal \n2.Docent \n3.Estudiant\n");
 
-        System.out.println("Quin DNI: ");
+        System.out.print("Quin DNI: ");
         String dni = scan.next();
 
         if (opcio == 1) {
@@ -197,34 +196,43 @@ public class Practica18_UF4_Pablo {
                 if (personal.get(i).getDni().equals(dni)) {
                     p = personal.get(i);
                     encontrado = true;
-                } else if (!encontrado) {
-                    System.out.println("No s'ha trobat cap empleat de personal amb aquest DNI ");
                 }
             }
-            correu = p.getEmailPersonal();
-            cc = "";
-            System.out.println("Concepte del mail: ");
-            subject = scan.nextLine();
+            if (encontrado) {
+                correu = p.getEmailPersonal();
+                cc = "";
+                System.out.print("Concepte del mail: ");
+                subject = scan.next();
 
-            System.out.println("Missatge del mail: ");
-            missatge = scan.nextLine();
+                System.out.print("Missatge del mail: ");
+                missatge = scan.next();
+                UtilsExamenUF3.EnviarEmail(correu, cc, subject, missatge);
+            } else {
+                System.out.print("No s'ha trobat cap empleat de personal amb aquest DNI ");
+            }
+
         } else if (opcio == 2) {
             Docent d = null;
             for (int i = 0; i < docents.size(); i++) {
                 if (docents.get(i).getDni().equals(dni)) {
                     d = docents.get(i);
                     encontrado = true;
-                } else if (!encontrado) {
-                    System.out.println("No s'ha trobat cap docent amb aquest DNI ");
                 }
             }
-            correu = d.getEmailPersonal();
-            cc = d.getEmailCentre();
-            System.out.println("Concepte del mail: ");
-            subject = scan.nextLine();
+            if (encontrado) {
+                correu = d.getEmailCentre();
+                cc = d.getEmailPersonal();
+                System.out.print("Concepte del mail: ");
+                subject = scan.next();
 
-            System.out.println("Missatge del mail: ");
-            missatge = scan.nextLine();
+                System.out.print("Missatge del mail: ");
+                missatge = scan.next();
+
+                UtilsExamenUF3.EnviarEmail(correu, cc, subject, missatge);
+            } else {
+                System.out.print("No s'ha trobat cap docent amb aquest DNI ");
+            }
+
         } else {
             Estudiant alumne = null;
             for (int i = 0; i < estudiants.size(); i++) {
@@ -235,42 +243,45 @@ public class Practica18_UF4_Pablo {
                         alumne = estudiants.get(i);
                     }
                     encontrado = true;
-                } else if (!encontrado) {
-                    System.out.println("No s'ha trobat cap alumne amb aquest DNI ");
                 }
             }
-            if (alumne instanceof AlumneMenor) {
-                String correuTutor[] = ((AlumneMenor) alumne).correuTutor;
-                correu = correuTutor[0];
-                cc = correuTutor[1];
-                System.out.println("Concepte del mail: ");
-                subject = scan.nextLine();
+            if (encontrado) {
+                if (alumne instanceof AlumneMenor) {
+                    String correuTutor[] = ((AlumneMenor) alumne).correuTutor;
+                    correu = correuTutor[0];
+                    cc = correuTutor[1];
+                    System.out.print("Concepte del mail: ");
+                    subject = scan.next();
 
-                System.out.println("Missatge del mail: ");
-                missatge = scan.nextLine();
+                    System.out.print("Missatge del mail: ");
+                    missatge = scan.next();
 
-            } else if (alumne instanceof AlumneMajor) {
-                boolean autoritzacio = ((AlumneMajor) alumne).isAutoritzacioTutors();
-                if (!autoritzacio) {
-                    correu = alumne.getEmailPersonal();
-                    cc = alumne.getEmailCentre();
-                    System.out.println("Concepte del mail: ");
-                    subject = scan.nextLine();
+                } else if (alumne instanceof AlumneMajor) {
+                    boolean autoritzacio = ((AlumneMajor) alumne).isAutoritzacioTutors();
+                    if (!autoritzacio) {
+                        correu = alumne.getEmailCentre();
+                        cc = alumne.getEmailPersonal();
+                        System.out.print("Concepte del mail: ");
+                        subject = scan.next();
 
-                    System.out.println("Missatge del mail: ");
-                    missatge = scan.nextLine();
-                } else {
-                    correu = alumne.getEmailPersonal();
-                    System.out.println("Introdueix el mail d'un tutor: ");
-                    cc = scan.next();
-                    System.out.println("Concepte del mail: ");
-                    subject = scan.nextLine();
-                    System.out.println("Missatge del mail: ");
-                    missatge = scan.nextLine();
+                        System.out.print("Missatge del mail: ");
+                        missatge = scan.nextLine();
+                    } else {
+                        correu = alumne.getEmailPersonal();
+                        System.out.print("Introdueix el mail d'un tutor: ");
+                        cc = scan.next();
+                        System.out.print("Concepte del mail: ");
+                        subject = scan.next();
+                        System.out.print("Missatge del mail: ");
+                        missatge = scan.next();
+                    }
                 }
+                UtilsExamenUF3.EnviarEmail(correu, cc, subject, missatge);
+            } else {
+                System.out.println("No s'ha trobat cap alumne amb aquest DNI");
             }
+
         }
-        UtilsExamenUF3.EnviarEmail(correu, cc, subject, missatge);
 
     }
 
@@ -293,56 +304,69 @@ public class Practica18_UF4_Pablo {
                     alumne = estudiants.get(i);
                 }
                 encontrado = true;
-            } else if (!encontrado) {
-                System.out.println("No s'ha trobat cap alumne amb aquest DNI ");
             }
         }
-        if (alumne instanceof AlumneMenor) {
-                String correuTutor[] = ((AlumneMenor) alumne).correuTutor;
-                correu = correuTutor[0];
-                cc = correuTutor[1];
 
-                System.out.println("Missatge del mail: ");
-                missatge = scan.nextLine();
+        if (encontrado) {
+                if (alumne instanceof AlumneMenor) {
+                    String correuTutor[] = ((AlumneMenor) alumne).correuTutor;
+                    correu = correuTutor[0];
+                    cc = correuTutor[1];
+                    
 
-            } else if (alumne instanceof AlumneMajor) {
-                boolean autoritzacio = ((AlumneMajor) alumne).isAutoritzacioTutors();
-                if (!autoritzacio) {
-                    correu = alumne.getEmailPersonal();
-                    cc = alumne.getEmailCentre();
+                    System.out.print("Missatge del mail: ");
+                    missatge = scan.next();
 
-                    System.out.println("Missatge del mail: ");
-                    missatge = scan.nextLine();
-                } else {
-                    correu = alumne.getEmailPersonal();
-                    System.out.println("Introdueix el mail d'un tutor: ");
-                    cc = scan.next();                  
-                    System.out.println("Missatge del mail: ");
-                    missatge = scan.nextLine();
+                } else if (alumne instanceof AlumneMajor) {
+                    boolean autoritzacio = ((AlumneMajor) alumne).isAutoritzacioTutors();
+                    if (!autoritzacio) {
+                        correu = alumne.getEmailCentre();
+                        cc = alumne.getEmailPersonal();
+                        
+
+                        System.out.print("Missatge del mail: ");
+                        missatge = scan.nextLine();
+                    } else {
+                        correu = alumne.getEmailPersonal();
+                        System.out.print("Introdueix el mail d'un tutor: ");
+                        cc = scan.next();
+                        System.out.print("Missatge del mail: ");
+                        missatge = scan.next();
+                    }
                 }
+                UtilsExamenUF3.EnviarEmail(correu, cc, subject, missatge);
+            } else {
+                System.out.println("No s'ha trobat cap alumne amb aquest DNI");
             }
-        UtilsExamenUF3.EnviarEmail(correu, cc, subject, missatge);
-
     }
 
     private static void mostrarEstadistiques() {
         int numPersones = 0;
-        
+        int numPersonal = 0;
+        int numAlumnes = 0;
+        int numDocents = 0;
+
         for (int i = 0; i < docents.size(); i++) {
             numPersones++;
+            numDocents++;
         }
         for (int i = 0; i < personal.size(); i++) {
             numPersones++;
+            numPersonal++;
         }
         for (int i = 0; i < estudiants.size(); i++) {
             numPersones++;
+            numAlumnes++;
         }
-        
+
         System.out.println("Hi han " + numPersones + " persones al centre");
+        System.out.println(numPersonal + " son de personal");
+        System.out.println(numDocents + " son docents");
+        System.out.println(numAlumnes + " son alumnes");
     }
 
     private static void imprimirEtiquetesNadal() {
-        
+
     }
 
 }
