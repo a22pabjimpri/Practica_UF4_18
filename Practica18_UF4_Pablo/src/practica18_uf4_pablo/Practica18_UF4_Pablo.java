@@ -248,8 +248,8 @@ public class Practica18_UF4_Pablo {
             if (encontrado) {
                 if (alumne instanceof AlumneMenor) {
                     String correuTutor[] = ((AlumneMenor) alumne).correuTutor;
-                    correu = correuTutor[0];
-                    cc = correuTutor[1];
+                    correu = alumne.getEmailPersonal();
+                    cc = alumne.getEmailCentre() + ", "+ correuTutor[1] + ", " + correuTutor[0];
                     System.out.print("Concepte del mail: ");
                     subject = scan.next();
 
@@ -310,8 +310,8 @@ public class Practica18_UF4_Pablo {
         if (encontrado) {
                 if (alumne instanceof AlumneMenor) {
                     String correuTutor[] = ((AlumneMenor) alumne).correuTutor;
-                    correu = correuTutor[0];
-                    cc = correuTutor[1];
+                    correu = alumne.getEmailCentre();
+                    cc = correuTutor[1] + ", " + correuTutor[0];
                     
 
                     System.out.print("Missatge del mail: ");
@@ -322,8 +322,6 @@ public class Practica18_UF4_Pablo {
                     if (!autoritzacio) {
                         correu = alumne.getEmailCentre();
                         cc = alumne.getEmailPersonal();
-                        
-
                         System.out.print("Missatge del mail: ");
                         missatge = scan.nextLine();
                     } else {
