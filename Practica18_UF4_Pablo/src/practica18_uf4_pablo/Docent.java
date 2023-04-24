@@ -4,6 +4,10 @@
  */
 package practica18_uf4_pablo;
 
+import static practica18_uf4_pablo.Practica18_UF4_Pablo.docents;
+import static practica18_uf4_pablo.Practica18_UF4_Pablo.scan;
+import utils.Utils;
+
 /**
  *
  * @author Pablo Jiménez
@@ -53,6 +57,34 @@ public class Docent extends Persona {
 
     public void setEmailCentre(String emailCentre) {
         this.emailCentre = emailCentre;
+    }
+    
+    public void altaDocent() {
+        String nom, dni, emailPersonal, emailCentre, especialitat, titulacio;
+        int anyInici;
+
+        System.out.print("Nom: ");
+        nom = scan.next();
+
+        System.out.print("Dni: ");
+        dni = scan.next();
+
+        System.out.print("E-mail personal: ");
+        emailPersonal = scan.next();
+
+        System.out.print("Especialitat del docent: ");
+        especialitat = scan.next();
+
+        System.out.print("Titulacio del docent: ");
+        titulacio = scan.next();
+
+        System.out.print("E-mail del centre: ");
+        emailCentre = scan.next();
+
+        anyInici = Utils.LlegirInt("Any d'inici: ");
+
+        Docent d = new Docent(especialitat, titulacio, anyInici, emailCentre, nom, dni, emailPersonal);
+        docents.add(d);
     }
     
     
