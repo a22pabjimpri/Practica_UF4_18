@@ -16,9 +16,9 @@ import java.util.Scanner;
  */
 public class Practica18_UF4_Pablo {
 
-    private static ArrayList<Docent> docents = new ArrayList<Docent>();
-    private static ArrayList<Personal> personal = new ArrayList<Personal>();
-    private static ArrayList<Estudiant> estudiants = new ArrayList<Estudiant>();
+    private static ArrayList<Docent> docents = new ArrayList<>();
+    private static ArrayList<Personal> personal = new ArrayList<>();
+    private static ArrayList<Estudiant> estudiants = new ArrayList<>();
     public static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
